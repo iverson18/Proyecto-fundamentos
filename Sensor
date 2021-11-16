@@ -1,0 +1,57 @@
+import java.util.ArrayList;
+public class Sensor {
+    private String tipo;
+    private double valor;
+    
+    public Sensor(){
+    }
+    
+    public Sensor(String t,double v){
+        this.tipo = t;
+        this.valor = v;
+    }
+
+    public String getTipo() {
+        return this.tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+
+    public double getValor() {
+        return this.valor;
+    }
+
+    public void setValor(double valor) {
+        this.valor = valor;
+    }
+
+    public String toString() {
+        String info ="tipo: "+ this.tipo+" valor: "+this.valor;
+        return info;
+    }
+
+    public static ArrayList<Sensor> ordenadosTemperatura(ArrayList<Sensor> sen){
+        ArrayList<Sensor> senTemp = new ArrayList<Sensor>();
+        int x = 0;
+        for(int i = 0; i<sen.size(); i++){
+            if(sen.get(i).getTipo().equalsIgnoreCase("temperatura")){
+                senTemp.add(sen.get(i));
+                x++;
+            }
+        }
+        for(int j = 0; j < senTemp.size()-1; j++){
+            int posMenor = j;
+            for(int y = j+1; y<senTemp.size();y++){
+                if(senTemp.get(y).getValor() < senTemp.get(posMenor).getValor()){
+                    posMenor = y;
+                }
+            }
+            Sensor temp = senTemp.get(j);
+            senTemp.set(j,senTemp.get(posMenor));
+            senTemp.set(posMenor,temp) ;
+        }
+        return senTemp;
+    }
+}
