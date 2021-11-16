@@ -1,0 +1,181 @@
+import java.util.ArrayList;
+public class Vehiculo{
+    public static ArrayList<Vehiculo> vehiculos = new ArrayList<Vehiculo>(); ;    
+    public static int idActual = 0;
+    private int id;
+    private int modelo;
+    private ArrayList<Sensor> sensores = new ArrayList<Sensor>();
+    private String marca;
+    private double valorComercial;
+    private String color;
+
+    public Vehiculo(){
+        this.id = Vehiculo.idActual + 1;
+        Vehiculo.idActual++;
+        Vehiculo.vehiculos.add(this);
+    }
+
+    public Vehiculo(int mo, String ma, double va){
+        this(mo, ma, va, "verde");
+    }
+
+    public Vehiculo(int mo, String ma, double va, String co){
+        this.modelo = mo;
+        this.marca = ma;
+        this.valorComercial = va;
+        this.color = co;
+        this.id = Vehiculo.idActual + 1;
+        Vehiculo.idActual++;
+        Vehiculo.vehiculos.add(this);
+    }
+
+    public int getId(){
+        return this.id;
+    }
+
+    public int getModelo(){
+        return this.modelo;
+    }
+
+    public String getMarca(){
+        return this.marca;
+    }
+
+    public double getValorComercial(){
+        return this.valorComercial;
+    }
+
+    public String getColor(){
+        return this.color;
+    }
+
+    public ArrayList<Sensor> getSensores(){
+        return this.sensores;
+    }
+
+    public void setId(int i){
+        this.id = i;
+    }
+
+    public void setModelo(int mo){
+        this.modelo = mo;
+    }
+
+    public void setMarca(String ma){
+        this.marca = ma;
+    }
+
+    public void setValorComercial(double va){
+        this.valorComercial = va;
+    }
+
+    public void setColor(String co){
+        this.color = co;
+    }
+
+    public void setSensores(ArrayList<Sensor> sens){
+        this.sensores = sens;
+    }
+
+    public String toString(){
+        String info = "id: "+ this.id +" modelo: " + this.modelo + " marca: " + this.marca + " Valor comercial: " + this.valorComercial + " color: " + this.color+"\n";
+        String infoSensor = "";
+        if(this.sensores.size() > 0){
+            for(int i = 0; i < this.cantidadSensores();i++){
+                infoSensor = this.sensores.get(i).toString();
+                info = info + infoSensor + "\n"; 
+            }
+        }else{
+            infoSensor = "El vehiculo no tiene sensores";
+            info = info + infoSensor;
+        }
+        return info;
+    }
+
+    public static String toStringVehiculos(){
+        String texto ="";
+        String informacion ="";
+        for(int i = 0; i < Vehiculo.vehiculos.size();i++) {
+            texto ="informacion del vehiculo:"+(i+1)+"\n"
+            +Vehiculo.vehiculos.get(i).toString()+"\n";
+            informacion = informacion + texto;
+        }
+        return informacion;
+    }
+
+    public static String vehiculosVerdes(ArrayList<Vehiculo> vehi){
+        String verdes = "";
+        for(int i = 0; i < vehi.size(); i++){
+            if (vehi.get(i).getColor().equalsIgnoreCase("verde")){
+                verdes = verdes + vehi.get(i).toString()+"\n";
+            }
+        }
+        return verdes;
+    }
+
+    public static Vehiculo obtenerVehiculoPorId(int i){
+        Vehiculo V1 = Vehiculo.vehiculos.get(0);
+        for(int x = 0; x < Vehiculo.idActual; x++){
+            if(Vehiculo.vehiculos.get(x).getId() == i){
+                V1 = Vehiculo.vehiculos.get(x);
+                break;
+            }
+        }
+        return V1;
+    }
+
+    public static int cantidadVehiculos(){
+        return Vehiculo.idActual;
+    }
+
+    public int cantidadSensores(){
+        return this.sensores.size();
+    }
+
+    public void anadirSensor(Sensor sen){
+        this.sensores.add(sen);
+    }
+
+    public static String sensoresTemperatura(ArrayList<Vehiculo> vehi){
+        String sensoresTemp = "";
+        for(int i = 0; i < vehi.size(); i++){
+            if(vehi.get(i).cantidadSensores() > 0){
+                ArrayList<Sensor> sensores = vehi.get(i).getSensores(); 
+                for(int x = 0; x < sensores.size(); x++){
+                    Sensor sen = sensores.get(x);
+                    if(sen.getTipo().equalsIgnoreCase("temperatura")){
+                        sensoresTemp = sensoresTemp + sen.toString()+"\n";
+                    }
+                }
+            }
+        }
+        return sensoresTemp;
+    }
+    
+    public static String vehiculoMasSensores(ArrayList<Vehiculo> vehi){
+        String vehiMasSen = "";
+        Vehiculo masSensores = vehi.get(0); 
+        for(int i = 0; i < vehi.size(); i++){
+            if(vehi.get(i).getId() == masSensores.getId()){
+                continue;
+            }else if(vehi.get(i).cantidadSensores() > masSensores.cantidadSensores()){
+                masSensores = vehi.get(i);
+            } 
+        }
+        vehiMasSen = masSensores.toString();
+        return vehiMasSen;
+    }
+    
+    public static ArrayList<Sensor> sensoresTemperatura(){
+        ArrayList<Sensor> senTemp = new ArrayList<Sensor>();
+        for(int x = 0; x < Vehiculo.cantidadVehiculos();x++){
+            Vehiculo V1 = Vehiculo.obtenerVehiculoPorId(x);
+            for(int i = 0; i < V1.cantidadSensores() ;i++){
+                Sensor S1 = V1.sensores.get(i);
+                senTemp.add(S1);
+            }
+        }
+        senTemp = Sensor.ordenadosTemperatura(senTemp);
+        return senTemp;
+    }
+}
