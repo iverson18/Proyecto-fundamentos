@@ -1,0 +1,142 @@
+import java.util.Scanner;
+import java.util.ArrayList;
+public class Principal{
+    public static void main(String[] args){
+        Principal.mostrarMenu();
+    }
+
+    public static void mostrarMenu(){
+        Scanner entrada = new Scanner(System.in);
+        int numId;
+        while(true){
+            System.out.println("- Ingrese 0 para finalizar la ejecucion del programa."+"\n"
+                +"- Ingrese 1 para crear un nuevo vehiculo."+"\n"
+                +"- Ingrese 2 para observar la informacion de todos los vehiculos."+"\n"
+                +"- Ingrese 3 para observar cuantos vehiculos hay creados."+"\n"
+                +"- Ingrese 4 para observar la informacion de los vehiculos de color verde."+"\n"
+                +"- Ingrese 5 para observar la informacion de un vehiculo en especifico."+"\n"
+                +"- Ingrese 6 para crear un sensor dentro de un vehiculo en especifico."+"\n"
+                +"- Ingrese 7 para observar los sensores de un vehiculo en especifico."+"\n"
+                +"- Ingrese 8 para observar todos los sensores de tipo temperatura."+"\n"
+                +"- Ingrese 9 para observar la informacion del vehiculo con mas sensores."+"\n"
+                +"- Ingrese 10 para crear 5 vehiculos"+"\n"
+                +"- Ingrese 666 para ordenar los sensores de tipo temperatura."+"\n"
+                +"Ingrese un valor: ");
+            int num = entrada.nextInt();
+            if(num == 0){
+                break;
+            }
+            switch(num){
+
+                case 1:
+                    while(true){
+                        System.out.println("- Ingrese el modelo del vehiculo");
+                        int modelo = entrada.nextInt();
+                        System.out.println("- Ingrese la marca del vehiculo");
+                        String marca = entrada.next();
+                        System.out.println("- Ingrese el valor comercial del vehiculo");
+                        double valorComercial = entrada.nextDouble();
+                        System.out.println("- Ingrese el color del vehiculo");
+                        String color = entrada.next();
+                        System.out.println("Vehiculo creado con exito");
+                        Vehiculo vehiculo1  = new Vehiculo(modelo,marca,valorComercial,color);
+                        System.out.println("¿Desea crear otro Vehiculo?");
+                        String reinicio = entrada.next();
+                        if(reinicio.equalsIgnoreCase("si")){
+                            continue;
+                        }else if (reinicio.equalsIgnoreCase("no")){
+                            break;
+                        }
+                    }                    
+                    break;
+                case 2:
+                    System.out.println(Vehiculo.toStringVehiculos());
+                    break;
+
+                case 3:
+                    if(Vehiculo.idActual == 0){
+                        System.out.println("No se ha creado ningun vehiculo");
+                    }else{
+                        System.out.println("Hasta el momento se han creado "+Vehiculo.idActual+" vehiculos");
+                    }
+                    break;
+
+                case 4:
+                    System.out.println(Vehiculo.vehiculosVerdes(Vehiculo.vehiculos));
+                    break;
+
+                case 5:
+                    System.out.println("Ingrese el id de un vehiculo: ");
+                    numId = entrada.nextInt();
+                    if(numId <= Vehiculo.idActual){
+                        Vehiculo V = Vehiculo.obtenerVehiculoPorId(numId);
+                        System.out.println(V.toString());
+                    }else{
+                        System.out.println("Ese vehiculo no existe");
+                    }
+                    break;
+
+                case 6:
+                    System.out.println("Ingrese el id de un vehiculo: ");
+                    numId = entrada.nextInt();
+                    if(numId <= Vehiculo.idActual){
+                        System.out.println("Ingrese el tipo del sensor: ");
+                        String tipo = entrada.next();
+                        System.out.println("Ingrese el valor del sensor: ");
+                        int valor = entrada.nextInt();
+                        Sensor S = new Sensor(tipo, valor);
+                        System.out.println("Sensor creado con exito");
+                        Vehiculo V = Vehiculo.obtenerVehiculoPorId(numId);
+                        V.anadirSensor(S);
+                        System.out.println("Sensor añadido con exito al vehiculo");
+                    }else{
+                        System.out.println("Ese vehiculo no existe");
+                    }
+                    break;
+
+                case 7:
+                    System.out.println("Ingrese el id de un vehiculo: ");
+                    numId = entrada.nextInt();
+                    if(numId <= Vehiculo.idActual){
+                        Vehiculo V = Vehiculo.obtenerVehiculoPorId(numId);
+                        System.out.println(V.toString());
+                    }else{
+                        System.out.println("Ese vehiculo no existe");
+                    }
+                    break;
+
+                case 8:
+                    System.out.println(Vehiculo.sensoresTemperatura(Vehiculo.vehiculos));
+                    break;
+
+                case 9:
+                    System.out.println(Vehiculo.vehiculoMasSensores(Vehiculo.vehiculos));
+                    break;
+
+                case 10:
+                    System.out.println("\n"
+                    +"2021 Toyota 100 millones negro"+"\n"
+                    +"2019 Volkswagen 45 millones gris"+"\n"
+                    +"2016 renault clio 30 millones verde"+"\n"
+                    +"2020 Chevrolet Blazer 50 millones verde" +"\n"
+                    +"2021 Toyota 150 millones gris"+"\n");
+                    Vehiculo v1 = new Vehiculo(2021, "Toyota", 100000000, "negro");
+                    Vehiculo v2 = new Vehiculo(2019, "Volkswagen", 45000000, "gris");
+                    Vehiculo v3 = new Vehiculo(2016, "renault clio", 30000000);
+                    Vehiculo v4 = new Vehiculo(2020, "Chevrolet Blazer", 50000000);
+                    Vehiculo v5 = new Vehiculo(2021, "Toyota", 150000000, "gris");
+                    break;
+
+                case 666:
+                    ArrayList<Sensor> sensoresTemp = Vehiculo.sensoresTemperatura();
+                    String sensoresTempInfo = "";
+                    for(int i = 0; i<sensoresTemp.size();i++){
+                        sensoresTempInfo = sensoresTempInfo + sensoresTemp.get(i).toString()+"\n";
+                    } 
+                    System.out.println(sensoresTempInfo);
+                    break;
+
+            } 
+        }
+    }
+}
