@@ -1,5 +1,6 @@
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.io.File;
 public class Principal{
     public static void main(String[] args){
         Principal.mostrarMenu();
@@ -114,17 +115,19 @@ public class Principal{
                     break;
 
                 case 10:
-                    System.out.println("\n"
-                    +"2021 Toyota 100 millones negro"+"\n"
-                    +"2019 Volkswagen 45 millones gris"+"\n"
-                    +"2016 renault clio 30 millones verde"+"\n"
-                    +"2020 Chevrolet Blazer 50 millones verde" +"\n"
-                    +"2021 Toyota 150 millones gris"+"\n");
-                    Vehiculo v1 = new Vehiculo(2021, "Toyota", 100000000, "negro");
-                    Vehiculo v2 = new Vehiculo(2019, "Volkswagen", 45000000, "gris");
-                    Vehiculo v3 = new Vehiculo(2016, "renault clio", 30000000);
-                    Vehiculo v4 = new Vehiculo(2020, "Chevrolet Blazer", 50000000);
-                    Vehiculo v5 = new Vehiculo(2021, "Toyota", 150000000, "gris");
+                    File file = new File("Vehiculos.txt");
+                    try{
+                        Scanner input = new Scanner(file);
+                        String linea;
+                        while(input.hasNextLine()){
+                            linea = input.nextLine();
+                            System.out.println(linea);
+                            String[] infoVehiculo = linea.split(",");
+                            Vehiculo V1 = new Vehiculo(Integer.parseInt(infoVehiculo[0]),infoVehiculo[1],Integer.parseInt(infoVehiculo[2]),infoVehiculo[3]);
+                        }
+                    }catch(Exception e){
+                        System.out.println(e.getMessage());
+                    }
                     break;
 
                 case 666:
