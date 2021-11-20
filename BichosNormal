@@ -1,0 +1,5 @@
+public class BichosNormal extends Bichos{
+    BichosNormal(){
+        super(10,"BN");
+    }
+}
