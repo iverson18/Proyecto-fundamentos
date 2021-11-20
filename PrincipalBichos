@@ -1,0 +1,94 @@
+import java.util.Scanner;
+public class PrincipalBichos{
+    public static void main(String[] args) {
+        Scanner Scan = new Scanner(System.in);
+        System.out.println("¿Quiere empezar a jugar?"+"\n"
+            +"-Ingrese 1 para empezar a jugar."+"\n"
+            +"-Ingrese 2 para salir.");
+        int juego = Scan.nextInt();
+        if(juego == 1){
+            while(true){
+                System.out.println("Iniciando el juego...");
+
+                int cantidad = (int)(Math.random()*4+1);
+                Bichos[][] bichos = Bichos.bichosTablero(cantidad);
+                while(true){
+                    System.out.println(Bichos.toStringTablero(bichos,cantidad));
+                    System.out.println("Elija una opcion:");
+                    System.out.println("(1) para disparar una bala");
+                    System.out.println("(2) para activar la bomba atómica");
+                    System.out.println("(3) para activar el bicho mutante");
+                    System.out.println("(4) para la frese de la abuela");
+                    juego = Scan.nextInt();
+                    switch(juego){
+                        case 1:
+                            System.out.println("Elija la posicion sobre la cual desee disparar:");
+                            int Disparo = Scan.nextInt();
+                            if(Disparo <= cantidad){
+                                if(Disparo == 1){
+                                    Bichos B1 = bichos[0][0];
+                                    B1.disparar(); 
+                                }else if(Disparo == 2){
+                                    Bichos B2 = bichos[0][1];
+                                    B2.disparar();
+                                }else if(Disparo == 3){
+                                    Bichos B3 = bichos[1][0];
+                                    B3.disparar();
+                                }else if(Disparo == 4){
+                                    Bichos B4 = bichos[1][1];
+                                    B4.disparar();
+                                }
+                            }else{
+                                System.out.println("No existe un bicho en la posicion que eligio");
+                            }
+                            break;
+
+                        case 2:
+                            int PosicionBomba = (int)(Math.random()*4+1);
+                            if(PosicionBomba <= cantidad){
+                                if(PosicionBomba == 1){
+                                    Bichos B1 = bichos[0][0];
+                                    B1.bombaAtomica(); 
+                                }else if(PosicionBomba == 2){
+                                    Bichos B2 = bichos[0][1];
+                                    B2.bombaAtomica();
+                                }else if(PosicionBomba == 3){
+                                    Bichos B3 = bichos[1][0];
+                                    B3.bombaAtomica();
+                                }else if(PosicionBomba == 4){
+                                    Bichos B4 = bichos[1][1];
+                                    B4.bombaAtomica();
+                                }
+                            }
+                            break;
+                        case 3:
+                            Bichos.bichoMutante(bichos,cantidad);
+                            break;
+                        case 4:
+                            System.out.println(Bichos.fraseAbuela());
+                            break;
+                    }
+
+                    if(Bichos.bichoVivo(bichos,cantidad) == false){
+                        System.out.println(Bichos.toStringTablero(bichos,cantidad));
+                        System.out.println("Todos los bichos han muerto");
+                        break;
+                    }
+                }
+                System.out.println("¿Quieres volver a jugar?"+"\n"
+                    +"-Ingrese 1 para finalizar el juego"+"\n"
+                    +"-Ingrese 2 para empezar una nueva partida" );
+                int reanudar = Scan.nextInt();
+                if(reanudar == 1){
+                    System.out.println("Game Over");
+                    break;
+                }else if(reanudar == 2){
+                    System.out.println("Borrando partida anterior..."+"\n"
+                        +"Iniciando partida nueva...");
+                }
+            }
+        }else if(juego == 2){
+            System.out.println("Programa finalizado");
+        }
+    }
+}
