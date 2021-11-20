@@ -1,1 +1,240 @@
+public class Bichos {
+    private int salud;
+    private String imagen;
 
+    public Bichos(int s,String i) {
+        this.salud = s;    
+        this.imagen = i;
+    }
+
+    public String getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
+    }
+
+    public int getSalud() {
+        return salud;
+    }
+
+    public void setSalud(int salud) {
+        this.salud = salud;
+    }
+
+    public void disparar(){
+        this.salud = this.salud-5;
+    }
+
+    public  void bombaAtomica(){
+        this.salud = this.salud - this.salud;
+    }
+
+    public  static String fraseAbuela(){
+        String frase = "";
+        int random = (int)(Math.random()*5+1);
+        switch(random){
+            case 1:
+                frase = "A caballo regalado no se le mira el diente";
+                break;
+            case 2:
+                frase = "Mas sabe el diablo por viejo que por diablo";
+                break;
+            case 3:
+                frase = "Vaya con ese manto a misa";
+                break;
+            case 4:
+                frase = "Eso le pasa por andar descalzo";
+                break;
+            case 5:
+                frase = "No se meta a la nevera acalorado que se tuerce";
+                break;
+        }
+        return frase;
+    }
+
+    public static boolean bichoVivo(Bichos[][] bichos,int cant) {
+        boolean vivos = true;
+        int bichosVivos = 0;
+        switch (cant){
+            case 1:
+                if(bichos[0][0].getSalud() > 0){
+                    bichosVivos++;
+                } 
+                break;
+            case 2:
+                if(bichos[0][0].getSalud() > 0){
+                    bichosVivos++;
+                }
+                if(bichos[0][1].getSalud() > 0){
+                    bichosVivos++;
+                } 
+
+                break;
+            case 3:
+                if(bichos[0][0].getSalud() > 0){
+                    bichosVivos++;
+                }
+                if(bichos[0][1].getSalud() > 0){
+                    bichosVivos++;
+                }       
+                if(bichos[1][0].getSalud() > 0){
+                    bichosVivos++;
+                } 
+
+                break;
+            case 4:
+                if(bichos[0][0].getSalud() > 0){
+                    bichosVivos++;
+                }    
+                if(bichos[0][1].getSalud() > 0){
+                    bichosVivos++;
+                }        
+                if(bichos[1][0].getSalud() > 0){
+                    bichosVivos++;
+                }       
+                if(bichos[1][1].getSalud() > 0){
+                    bichosVivos++;
+                } 
+                break;
+        }
+
+        if(bichosVivos == 0){
+            vivos = false;
+        }else{
+            vivos = true;
+        }
+        return vivos;
+    }
+
+    public String imagenTablero(){
+        String imagenB = this.imagen+"-"+this.salud;
+        return imagenB;
+    }
+
+    public static Bichos[][] bichosTablero(int cantidad){
+        Bichos[][] bichos = new Bichos[2][2];
+        for(int i = 0; i < cantidad; i++){
+            int numBicho = (int)(Math.random()*2+1);
+            if(i == 0){
+                if(numBicho == 1){
+                    Bichos BN = new BichosNormal();
+                    bichos[0][0] = BN;
+                }else if(numBicho == 2){
+                    Bichos BA = new BichosAlien();
+                    bichos[0][0] = BA;
+                } 
+            }else if(i == 1){
+                if(numBicho == 1){
+                    Bichos BN = new BichosNormal();
+                    bichos[0][1] = BN;
+                }else if(numBicho == 2){
+                    Bichos BA = new BichosAlien();
+                    bichos[0][1] = BA;
+                } 
+            }else if(i == 2){
+                if(numBicho == 1){
+                    Bichos BN = new BichosNormal();
+                    bichos[1][0] = BN;
+                }else if(numBicho == 2){
+                    Bichos BA = new BichosAlien();
+                    bichos[1][0] = BA;
+                } 
+            }else if(i == 3){
+                if(numBicho == 1){
+                    Bichos BN = new BichosNormal();
+                    bichos[1][1] = BN;
+                }else if(numBicho == 2){
+                    Bichos BA = new BichosAlien();
+                    bichos[1][1] = BA;
+                } 
+            }
+        }
+        return bichos;
+    }
+
+    public static String toStringTablero(Bichos[][] bichos, int cantidad){
+        String imagenTablero = "-------------"+"\n";
+        if(cantidad == 1){
+            Bichos B1 = bichos[0][0];
+            imagenTablero = imagenTablero + "|"+B1.imagenTablero()+"|"+"     "+"|"+"\n"
+            +"-------------"+"\n"
+            +"|"+"     "+"|"+"     "+"|"+"\n"
+            +"-------------";
+        }else if(cantidad == 2){
+            Bichos B1 = bichos[0][0];
+            Bichos B2 = bichos[0][1];
+
+            imagenTablero = imagenTablero + "|"+B1.imagenTablero()+"|"+B2.imagenTablero()+"|"+"\n"
+            +"-------------"+"\n"
+            +"|"+"     "+"|"+"     "+"|"+"\n"
+            +"-------------";
+        }else if(cantidad == 3){
+            Bichos B1 = bichos[0][0];
+            Bichos B2 = bichos[0][1];
+            Bichos B3 = bichos[1][0];
+
+            imagenTablero = imagenTablero + "|"+B1.imagenTablero()+"|"+B2.imagenTablero()+"|"+"\n"
+            +"-------------"+"\n"
+            +"|"+B3.imagenTablero()+"|"+"     "+"|"+"\n"
+            +"-------------";
+        }else if(cantidad == 4){
+            Bichos B1 = bichos[0][0];
+            Bichos B2 = bichos[0][1];
+            Bichos B3 = bichos[1][0];
+            Bichos B4 = bichos[1][1];
+
+            imagenTablero = imagenTablero + "|"+B1.imagenTablero()+"|"+B2.imagenTablero()+"|"+"\n"
+            +"-------------"+"\n"
+            +"|"+B3.imagenTablero()+"|"+B4.imagenTablero()+"|"+"\n"
+            +"-------------";
+        }
+        return imagenTablero;
+    }
+
+    public static void bichoMutante(Bichos[][] bichos,int cant){
+        Bichos menorSalud = bichos[0][0];
+        if(cant == 2){
+            if(bichos[0][0].getSalud() == 0){
+                menorSalud = bichos[0][1];
+            }
+            if(bichos[0][1].getSalud() < menorSalud.getSalud()){
+                menorSalud = bichos[0][1];
+            }
+        }else if(cant == 3){
+            for(int x = 0; x < bichos.length;x++){
+                for(int y = 0; y<1;y++){
+                    if(menorSalud.getSalud() == 0){
+                        menorSalud = bichos[0][1];
+                    }
+                    if(bichos[x][y].getSalud() == 0){
+                        continue;
+                    }
+                    if(bichos[x][y].getSalud() == menorSalud.getSalud()){
+                        continue;
+                    }else if(bichos[x][y].getSalud() < menorSalud.getSalud()){
+                        menorSalud = bichos[x][y];
+                    }
+                }
+            }
+        }else if(cant == 4){
+            for(int x = 0; x < bichos.length;x++){
+                for(int y = 0; y<bichos[x].length;y++){
+                    if(menorSalud.getSalud() == 0){
+                        menorSalud = bichos[0][1];
+                    }
+                    if(bichos[x][y].getSalud() == 0){
+                        continue;
+                    }
+                    if(bichos[x][y].getSalud() == menorSalud.getSalud()){
+                        continue;
+                    }else if(bichos[x][y].getSalud() < menorSalud.getSalud()){
+                        menorSalud = bichos[x][y];
+                    }
+                }
+            }
+        }
+        menorSalud.setSalud(menorSalud.getSalud()*2);
+    }
+}
